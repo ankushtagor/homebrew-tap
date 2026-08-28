@@ -7,12 +7,12 @@ cask "socyu-agent" do
   # on upload, or the sha256 pins below go stale.
   on_arm do
     sha256 "eb730dc4439627bec608a20081e3dd449ba7e90039dc43c4f37fa5b1a4a4654c"
-    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU Agent-#{version}-arm64.dmg",
+    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU%20Agent-#{version}-arm64.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
   on_intel do
     sha256 "4203cf3d599f17e8854851091d41ace421442d940405d55aa5120484db8d84b4"
-    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU Agent-#{version}.dmg",
+    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU%20Agent-#{version}.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
 
