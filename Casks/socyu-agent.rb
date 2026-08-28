@@ -1,18 +1,19 @@
 cask "socyu-agent" do
   version "0.1.0"
 
-  # TODO(deploy step 3 in RUNBOOK.md): replace OWNER/REPO once the release
-  # repo exists. These two file names match what `npm run dist:dev:arm64`
-  # and `npm run dist:dev:x64` already produce byte-for-byte — do not rename
-  # on upload, or the sha256 pins below go stale.
+  # GitHub Releases renames spaces in uploaded asset filenames to dots
+  # (confirmed via `gh release view --json assets` after the real upload —
+  # "SocyU Agent-0.1.0-arm64.dmg" landed as "SocyU.Agent-0.1.0-arm64.dmg").
+  # Match that exactly, not the local dist/ filename or a %20-encoded one —
+  # both of those 404.
   on_arm do
     sha256 "eb730dc4439627bec608a20081e3dd449ba7e90039dc43c4f37fa5b1a4a4654c"
-    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU%20Agent-#{version}-arm64.dmg",
+    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
   on_intel do
     sha256 "4203cf3d599f17e8854851091d41ace421442d940405d55aa5120484db8d84b4"
-    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU%20Agent-#{version}.dmg",
+    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
 
@@ -20,7 +21,7 @@ cask "socyu-agent" do
   desc "SocyU on-device content agent"
   homepage "https://socyu.app"
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: [">=", :sonoma]
 
   app "SocyU Agent.app"
 
