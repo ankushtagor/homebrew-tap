@@ -21,7 +21,7 @@ cask "socyu-agent" do
   desc "SocyU on-device content agent"
   homepage "https://socyu.app"
 
-  depends_on macos: [">=", :sonoma]
+  depends_on macos: ">= :sonoma"
 
   app "SocyU Agent.app"
 
