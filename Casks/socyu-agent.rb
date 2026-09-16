@@ -1,5 +1,5 @@
 cask "socyu-agent" do
-  version "0.1.1"
+  version "0.1.2"
 
   # GitHub Releases renames spaces in uploaded asset filenames to dots
   # (confirmed via `gh release view --json assets` after the real upload —
@@ -16,13 +16,18 @@ cask "socyu-agent" do
   #     onnxruntime-node binaries at once (~270MB of dead weight on a mac
   #     build) — after-pack.js now prunes to just the target platform/arch,
   #     cutting the DMG from ~452MB to ~338MB.
+  #
+  # v0.1.2: Kokoro TTS segment caching (media/ttsCache.js) + profile-aware
+  # speech delivery strategy (media/speechDeliveryStrategy.js) — reduces
+  # repeat-synthesis time and personalizes narration pacing/gesture pattern
+  # from the business profile.
   on_arm do
-    sha256 "2208d46e6af1da2676a8a3c5f14ce270516308db186fa35aa485cd6f9c76f8f1"
+    sha256 "3d4789329339d46fde53ef3553fbe4c6af84a50a6fc341bb06718c654551f18d"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
   on_intel do
-    sha256 "1574222357c3b1a6f0309e367f16327f722d7d304757d14c509d523c2dff9b9a"
+    sha256 "220476c1e240a1e275fdb23b192b19b4221e7e1cf45d0679241fd8570de5f379"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
