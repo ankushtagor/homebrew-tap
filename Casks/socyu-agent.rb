@@ -1,5 +1,5 @@
 cask "socyu-agent" do
-  version "0.1.2"
+  version "0.1.3"
 
   # GitHub Releases renames spaces in uploaded asset filenames to dots
   # (confirmed via `gh release view --json assets` after the real upload —
@@ -21,13 +21,17 @@ cask "socyu-agent" do
   # speech delivery strategy (media/speechDeliveryStrategy.js) — reduces
   # repeat-synthesis time and personalizes narration pacing/gesture pattern
   # from the business profile.
+  #
+  # v0.1.3: Sarvam Hindi TTS provider (alternate to AWS Polly), Market Lens
+  # service refactor + IPC module, article-grounded trend-carousel writer,
+  # draft retention, and content pipeline fixes.
   on_arm do
-    sha256 "3d4789329339d46fde53ef3553fbe4c6af84a50a6fc341bb06718c654551f18d"
+    sha256 "724fdf6b4dc05d1d751471a2c35ef75efc5c1187ed6a61785fd4a558376a9c4a"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
   on_intel do
-    sha256 "220476c1e240a1e275fdb23b192b19b4221e7e1cf45d0679241fd8570de5f379"
+    sha256 "7e04b9123ed0460a1d82d794dd64f9a574766020859d52baaa2b431c6e17cf94"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
