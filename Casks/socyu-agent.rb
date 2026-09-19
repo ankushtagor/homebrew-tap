@@ -1,5 +1,5 @@
 cask "socyu-agent" do
-  version "0.1.4"
+  version "0.1.5"
 
   # GitHub Releases renames spaces in uploaded asset filenames to dots
   # (confirmed via `gh release view --json assets` after the real upload —
@@ -32,12 +32,21 @@ cask "socyu-agent" do
   # functional change. Verified via codesign --verify --deep --strict on
   # both arches, a DMG mount/contents check, and npm run test:media before
   # this release was cut.
+  #
+  # v0.1.5: fixes a real production bug — resolveApiBase.js's "probe
+  # localhost:8000, fall back to prod" dev convenience had no packaged-build
+  # gate, so any unrelated service already listening on port 8000 on a
+  # user's machine silently hijacked every API call for the life of the
+  # process (reported as "Check now" throwing a raw Flask/Werkzeug 404 page
+  # instead of this app's real JSON error shape). Now gated on
+  # app.isPackaged. Also: tray icon sometimes invisible on a cold launch
+  # (trayVisibilityFix.js watchdog), Business info tab blank on first open.
   on_arm do
-    sha256 "d93cabe1c9f7c3f617e23f42ffbc3a715bc720ad0e8afb6886ceca831f90a975"
+    sha256 "fb70a3bf9aada7a9fd039a5d2bebe75e22993caa4d313e7714b9b3a495c8ce90"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg"
   end
   on_intel do
-    sha256 "399ca6764082182576d7946288d64fe7d691ccf919d0ab18e88aea836b9561e3"
+    sha256 "90f6b7f30da230498e292fbe12819a890178d217b77b7249a30d77dd1656245a"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg"
   end
 
