@@ -1,5 +1,5 @@
 cask "socyu-agent" do
-  version "0.1.5"
+  version "0.1.6"
 
   # GitHub Releases renames spaces in uploaded asset filenames to dots
   # (confirmed via `gh release view --json assets` after the real upload —
@@ -41,12 +41,20 @@ cask "socyu-agent" do
   # instead of this app's real JSON error shape). Now gated on
   # app.isPackaged. Also: tray icon sometimes invisible on a cold launch
   # (trayVisibilityFix.js watchdog), Business info tab blank on first open.
+  #
+  # v0.1.6: fixes the app freezing ("Not Responding", up to 30s) on launch —
+  # the ffmpeg license audit ran spawnSync twice on the main thread, on
+  # every launch, each with a 15s timeout. Especially bad the first time a
+  # machine ever runs the bundled (unsigned, ad-hoc-signed) ffmpeg binary,
+  # since macOS Gatekeeper's first-run scan adds real latency before it can
+  # even execute. Now async and cached — never blocks startup, and only the
+  # very first launch on a machine spawns ffmpeg for this at all.
   on_arm do
-    sha256 "fb70a3bf9aada7a9fd039a5d2bebe75e22993caa4d313e7714b9b3a495c8ce90"
+    sha256 "7680d268557b851c259e797aad62b537b5ac70bd28604bef4c453d02570b222d"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg"
   end
   on_intel do
-    sha256 "90f6b7f30da230498e292fbe12819a890178d217b77b7249a30d77dd1656245a"
+    sha256 "f2db0a5ddca4b29f0b116c30565f83cc0f738674ca4b452f7eda0cda1e489f16"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg"
   end
 
