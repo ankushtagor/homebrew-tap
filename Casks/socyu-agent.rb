@@ -34,20 +34,18 @@ cask "socyu-agent" do
   # this release was cut.
   on_arm do
     sha256 "d93cabe1c9f7c3f617e23f42ffbc3a715bc720ad0e8afb6886ceca831f90a975"
-    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg",
-        verified: "github.com/ankushtagor/socyu-agent-releases/"
+    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg"
   end
   on_intel do
     sha256 "399ca6764082182576d7946288d64fe7d691ccf919d0ab18e88aea836b9561e3"
-    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg",
-        verified: "github.com/ankushtagor/socyu-agent-releases/"
+    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg"
   end
 
   name "SocyU Agent"
   desc "SocyU on-device content agent"
   homepage "https://socyu.app"
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "SocyU Agent.app"
 
@@ -57,7 +55,7 @@ cask "socyu-agent" do
   # pinned above before this line runs, so clearing quarantine here is
   # backed by that independent integrity check — do not replicate this in
   # a standalone curl script without the same verify-first ordering.
-  postflight do
+  postflight_steps do
     system_command "/usr/bin/xattr",
                     args: ["-dr", "com.apple.quarantine", "#{appdir}/SocyU Agent.app"],
                     sudo: false
