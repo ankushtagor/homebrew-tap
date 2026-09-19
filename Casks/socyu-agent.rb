@@ -64,10 +64,23 @@ cask "socyu-agent" do
   # pinned above before this line runs, so clearing quarantine here is
   # backed by that independent integrity check — do not replicate this in
   # a standalone curl script without the same verify-first ordering.
+  #
+  # postflight_steps runs in a different DSL than the old postflight block —
+  # it builds a declarative, JSON-serialisable step list (Homebrew::InstallSteps::DSL,
+  # see install_steps.rb in a brew checkout), not plain Ruby. Two real
+  # consequences, both confirmed by reading that source directly:
+  #   1. The method is `run`, not `system_command` — `system_command` doesn't
+  #      exist in this DSL at all.
+  #   2. `appdir` is not a callable Ruby method here (undef_method strips
+  #      almost everything from this class), so `"#{appdir}/..."` throws
+  #      "undefined local variable or method 'appdir'". Path tokens are
+  #      resolved later, at run time, by substring-matching literal
+  #      `{{appdir}}` in the arg string (Runner#expand_template_tokens) — so
+  #      it has to be written as a template token, not interpolated.
   postflight_steps do
-    system_command "/usr/bin/xattr",
-                    args: ["-dr", "com.apple.quarantine", "#{appdir}/SocyU Agent.app"],
-                    sudo: false
+    run "/usr/bin/xattr",
+        args: ["-dr", "com.apple.quarantine", "{{appdir}}/SocyU Agent.app"],
+        sudo: false
   end
 
   caveats <<~EOS
