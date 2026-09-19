@@ -1,5 +1,5 @@
 cask "socyu-agent" do
-  version "0.1.3"
+  version "0.1.4"
 
   # GitHub Releases renames spaces in uploaded asset filenames to dots
   # (confirmed via `gh release view --json assets` after the real upload —
@@ -25,13 +25,20 @@ cask "socyu-agent" do
   # v0.1.3: Sarvam Hindi TTS provider (alternate to AWS Polly), Market Lens
   # service refactor + IPC module, article-grounded trend-carousel writer,
   # draft retention, and content pipeline fixes.
+  #
+  # v0.1.4: maximum asar compression + explicit unpack of ffmpeg-static /
+  # ffprobe-static / onnxruntime-node (previously duplicated inside app.asar
+  # since only *.node matched the unpack glob). ~357MB -> ~334MB, no
+  # functional change. Verified via codesign --verify --deep --strict on
+  # both arches, a DMG mount/contents check, and npm run test:media before
+  # this release was cut.
   on_arm do
-    sha256 "724fdf6b4dc05d1d751471a2c35ef75efc5c1187ed6a61785fd4a558376a9c4a"
+    sha256 "d93cabe1c9f7c3f617e23f42ffbc3a715bc720ad0e8afb6886ceca831f90a975"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
   on_intel do
-    sha256 "7e04b9123ed0460a1d82d794dd64f9a574766020859d52baaa2b431c6e17cf94"
+    sha256 "399ca6764082182576d7946288d64fe7d691ccf919d0ab18e88aea836b9561e3"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg",
         verified: "github.com/ankushtagor/socyu-agent-releases/"
   end
