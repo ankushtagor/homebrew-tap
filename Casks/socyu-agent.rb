@@ -1,5 +1,5 @@
 cask "socyu-agent" do
-  version "0.1.6"
+  version "0.1.7"
 
   # GitHub Releases renames spaces in uploaded asset filenames to dots
   # (confirmed via `gh release view --json assets` after the real upload —
@@ -49,12 +49,26 @@ cask "socyu-agent" do
   # since macOS Gatekeeper's first-run scan adds real latency before it can
   # even execute. Now async and cached — never blocks startup, and only the
   # very first launch on a machine spawns ffmpeg for this at all.
+  #
+  # v0.1.7: eliminates the API-base probing bug class entirely —
+  # resolveApiBase.js no longer probes localhost:8000 in ANY mode, always
+  # resolves to the real API (v0.1.5's app.isPackaged gate only closed this
+  # for packaged builds; a dev machine running any local backend was still
+  # exposed). API errors now show a short diagnostic instead of dumping the
+  # full raw response body. Fixes a real leak in the tray-visibility
+  # watchdog itself: a recreated Tray's setToolTip call re-entered the
+  # patched method and started an independent, uncapped second watchdog
+  # chain — a persistently-broken tray environment could recreate
+  # indefinitely. Kokoro TTS init is now bounded by a timeout so a stalled
+  # model load can't wedge every subsequent launch. New regression tests
+  # cover all of the above (test/fresh-install-regression.js,
+  # test/tray-visibility-regression.js).
   on_arm do
-    sha256 "7680d268557b851c259e797aad62b537b5ac70bd28604bef4c453d02570b222d"
+    sha256 "153e0e85794e43e762af633b3e147da4abb7cc3655a9e3c7675f60056d983ca6"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg"
   end
   on_intel do
-    sha256 "f2db0a5ddca4b29f0b116c30565f83cc0f738674ca4b452f7eda0cda1e489f16"
+    sha256 "9d07a29252cef7b63cc392f14d3e0697610187cf1bcd5766f7b981b907df6a7a"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg"
   end
 
