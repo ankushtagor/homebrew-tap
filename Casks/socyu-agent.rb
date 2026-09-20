@@ -1,5 +1,5 @@
 cask "socyu-agent" do
-  version "0.1.7"
+  version "0.1.8"
 
   # GitHub Releases renames spaces in uploaded asset filenames to dots
   # (confirmed via `gh release view --json assets` after the real upload —
@@ -63,12 +63,16 @@ cask "socyu-agent" do
   # model load can't wedge every subsequent launch. New regression tests
   # cover all of the above (test/fresh-install-regression.js,
   # test/tray-visibility-regression.js).
+  #
+  # v0.1.8: preserves a person's in-progress Business Details wizard while
+  # refreshing the remote profile, while an untouched new wizard correctly
+  # receives its saved profile instead of appearing frozen on the first step.
   on_arm do
-    sha256 "153e0e85794e43e762af633b3e147da4abb7cc3655a9e3c7675f60056d983ca6"
+    sha256 "3747dd44a3c2081bccc57ceaef02e5590611e1b800c241984711f127f8bbbf68"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg"
   end
   on_intel do
-    sha256 "9d07a29252cef7b63cc392f14d3e0697610187cf1bcd5766f7b981b907df6a7a"
+    sha256 "6464d93bec512a15d7b53e94b59a13ad82bc7537da40f1b5121b2862643e90b6"
     url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg"
   end
 
