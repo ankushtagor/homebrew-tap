@@ -1,5 +1,5 @@
 cask "socyu-agent" do
-  version "0.1.8"
+  version "0.1.9"
 
   # GitHub Releases renames spaces in uploaded asset filenames to dots
   # (confirmed via `gh release view --json assets` after the real upload —
@@ -67,13 +67,20 @@ cask "socyu-agent" do
   # v0.1.8: preserves a person's in-progress Business Details wizard while
   # refreshing the remote profile, while an untouched new wizard correctly
   # receives its saved profile instead of appearing frozen on the first step.
+  #
+  # v0.1.9: fixes kLSNoExecutableErr on macOS 26 (Tahoe). The C launcher
+  # compiled by after-pack.js was never ad-hoc codesigned, and macOS 26 rejects
+  # an unsigned main bundle executable even after quarantine is cleared.
+  # Also fixes x64 builds: the x64 Electron distribution ships with unsigned
+  # helpers and framework binaries — after-pack.js now signs all Frameworks
+  # subcomponents bottom-up before sealing the main bundle.
   on_arm do
-    sha256 "3747dd44a3c2081bccc57ceaef02e5590611e1b800c241984711f127f8bbbf68"
-    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}-arm64.dmg"
+    sha256 "ceb1775f1981e88f4fad4e187b71b71ba53fe73d0fbce47e591eb597e01e82b8"
+    url "https://duzzvklv1705w.cloudfront.net/releases/v#{version}/SocyU.Agent-#{version}-arm64.dmg"
   end
   on_intel do
-    sha256 "6464d93bec512a15d7b53e94b59a13ad82bc7537da40f1b5121b2862643e90b6"
-    url "https://github.com/ankushtagor/socyu-agent-releases/releases/download/v#{version}/SocyU.Agent-#{version}.dmg"
+    sha256 "b5cd91114870da9fe2b935ef2cb682c83b2a6a6de2403fd0087e50d698a08044"
+    url "https://duzzvklv1705w.cloudfront.net/releases/v#{version}/SocyU.Agent-#{version}.dmg"
   end
 
   name "SocyU Agent"
